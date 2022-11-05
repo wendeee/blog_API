@@ -3,15 +3,21 @@ const articleController = require('../controllers/article.controller')
 const passport = require('passport')
 require('../component/authentication/auth')
 const router = express.Router();
-router.get('/', articleController.getAllArticles);
-router.get('/:id', articleController.getArticleById)
-// router.get('/author/:authorName', articleController.getArticlesByAuthor)
-// router.get('/:articleTitle', articleController.getArticleByTitle)
-// router.get('/tag/:tagName', articleController.getArticlesByTag)
-router.post('/', passport.authenticate('jwt', {session:false}), articleController.createArticles)
-// router.patch('/:id', passport.authenticate('jwt', {session: false}), articleController.updateAnArticle )
-router.put('/:id', passport.authenticate('jwt', {session: false}), articleController.editArticle)
-router.delete('/:id', passport.authenticate('jwt', {session: false}), articleController.deleteArticle)
+router
+    .route('/')
+    .get(articleController.getAllArticles)
+    .post(passport.authenticate('jwt', {session:false}), articleController.createArticles)
+router
+.route('/:id')
+    .get(articleController.getArticleById)
+    .put(passport.authenticate('jwt', {session: false}), articleController.updateAnArticle)
+    .put(passport.authenticate('jwt', {session: false}), articleController.editArticle)
+    .delete(passport.authenticate('jwt', {session: false}), articleController.deleteArticle)
+// router.get('/', articleController.getAllArticles);
+// router.get('/:id', articleController.getArticleById)
+// router.post('/', passport.authenticate('jwt', {session:false}), articleController.createArticles)
+// router.put('/:id', passport.authenticate('jwt', {session: false}), articleController.editArticle)
+// router.delete('/:id', passport.authenticate('jwt', {session: false}), articleController.deleteArticle)
 
 module.exports = router;
 
