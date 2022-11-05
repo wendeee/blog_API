@@ -2,9 +2,9 @@
   "name": "blog_api",
   "version": "1.0.0",
   "description": "A blog API",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/server.js"
   },
   "author": "Chinwendu Enyinna",
   "license": "ISC",
