@@ -3,7 +3,7 @@ const passport = require('passport')
 const userAuthRouter = require('./api/routes/UserAuth');
 const articleRouter = require('./api/routes/article.route')
 const authorRouter = require('./api/routes/author.route')
-const globalErrorCatch = require('../src/api/utils/globalErrorCatch')
+const globalErrorCatch = require('./api/utils/globalErrorCatch')
 const app = express();
 
 require('dotenv').config();
