@@ -19,10 +19,10 @@ exports.getAllArticles = catchAsyncError(async(req, res, next)=>{
          } = query;
 
          //count number of published articles and compare with skip value
-         let numOfArticles = await Article.countDocuments()
-        if(skip >= numOfArticles){
-           res.json('Invalid Page Request')
-        }
+        //  let numOfArticles = await Article.countDocuments()
+        // if(skip >= numOfArticles){
+        //    res.json('Invalid Page Request')
+        // }
 
         //create query object
         const searchQuery = {};
