@@ -4,8 +4,7 @@
   "description": "A blog API",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "author": "Chinwendu Enyinna",
   "license": "ISC",
@@ -20,5 +19,9 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "jest": "^29.2.2",
+    "supertest": "^6.3.1"
   }
 }
