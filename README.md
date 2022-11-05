@@ -64,7 +64,7 @@ This is a Blog REST API (with JWT and Passport authentication) using NodeJS, Exp
 ├── package.json
 ├── package-lock.json
 └── README.md
-
+```
 
 ## Models
 ---
