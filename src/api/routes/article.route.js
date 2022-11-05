@@ -10,7 +10,7 @@ router
 router
 .route('/:id')
     .get(articleController.getArticleById)
-    .put(passport.authenticate('jwt', {session: false}), articleController.updateAnArticle)
+    // .put(passport.authenticate('jwt', {session: false}), articleController.updateAnArticle)
     .put(passport.authenticate('jwt', {session: false}), articleController.editArticle)
     .delete(passport.authenticate('jwt', {session: false}), articleController.deleteArticle)
 // router.get('/', articleController.getAllArticles);
