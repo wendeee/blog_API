@@ -26,8 +26,8 @@ exports.getAllArticles = catchAsyncError(async(req, res, next) => {
            res.json('Invalid Page Request')
         }
 
-    
-       const articles = await authorService.getAllArticles( {state: {$regex:  new RegExp(req.query.state, "i")}, author_Id: req.user._id})
+        let findQuery= req.query.state
+       const articles = await authorService.getAllArticles( {state: {$regex:  new RegExp(findQuery, "i")}, author_Id: req.user._id})
        res.status(200).json(articles)    
 })
     
