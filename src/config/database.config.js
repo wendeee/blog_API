@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 // const MONGO_DB_CONNECTION_URL= process.env.MONGODB_CONNECTION_URL;
-const MONGO_DB_CONNECTION_URL = process.env.NODE_ENV === 'test' 
-? process.env.TEST_BLOG_API
-: process.env.MONGODB_CONNECTION_URL
+const MONGO_DB_CONNECTION_URL =  process.env.MONGODB_CONNECTION_URL
 
 
 const CONFIG = {
