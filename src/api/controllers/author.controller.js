@@ -27,7 +27,8 @@ exports.getAllArticles = catchAsyncError(async(req, res, next) => {
         }
 
         let findQuery= req.query.state
-       const articles = await Article.find( {state: {$regex:  new RegExp(findQuery, "i")}, author_Id: req.user._id },limit_per_page,skip)
+        const articles= await Article.findById(req.user._id)
+    //    const articles = await Article.find( {state: {$regex:  new RegExp(findQuery, "i")}, author_Id: req.user._id },limit_per_page,skip)
        res.status(200).json(articles);     
 })
     
