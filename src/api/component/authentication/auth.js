@@ -33,7 +33,6 @@ passport.use('signup', new localStrategy({
     let lastname = req.body.lastname;
     try{
         const user = await User.create({firstname, lastname, email, password})
-        console.log(user)
         return done(null, user)
     }catch(error){
         return done(error)
