@@ -37,9 +37,10 @@ This is a Blog REST API (with JWT and Passport authentication) using NodeJS, Exp
 - update env with example.env
 - run `npm run start:dev` -->
 
-<!-- ---
+---
 ## Base URL
-- somehostsite.com -->
+- https://real-plum-firefly-cape.cyclic.app/
+
 
 ## Directory Structure
 
@@ -58,8 +59,8 @@ This is a Blog REST API (with JWT and Passport authentication) using NodeJS, Exp
 |   |   |──validator/      
 │   |
 |   └── config/
-|    |── app.js
-|    |── server.js                         
+|   |── app.js
+|   |── server.js                         
 ├── tests/                                                       
 ├── package.json
 ├── package-lock.json
@@ -144,12 +145,15 @@ Success
 ```
 
 ---
+
+## GENERAL ENDPOINT
+
 ### Create Article(Blog)
 
 - Route: /api/v1/articles
 - Method: POST
 - Header
-    - Authorization: Bearer <tokenMessageFromLogin>
+    - Authorization: Bearer {tokenMessageFromLogin}
 - Body: 
 ```
 {
@@ -285,8 +289,16 @@ Success
 }
 
 ```
+## AUTHOR ENDPOINT
+### Get All Blogs
+
+- Route: /api/v1/author/blogs
+- Method: GET
 
 
+## Postman Documentation
+
+[Postman Doc](https://documenter.getpostman.com/view/21759471/2s8YYJq3HT)
 ---
 ...
 
