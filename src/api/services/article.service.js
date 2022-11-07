@@ -1,7 +1,7 @@
 //title, description, tags, author, timestamp, state, read_count, reading_time and body
 const Article = require('../model/Article');
-const catchAsyncError = require('../utils/error.catchAsync')
 
+//get all published articles
 exports.getAllArticles = async(searchQuery, orderQuery, skip, limit_per_page) =>{
     try{
         const articles = await Article.find( 
@@ -18,6 +18,7 @@ exports.getAllArticles = async(searchQuery, orderQuery, skip, limit_per_page) =>
     }
 }
 
+//get a published article by ID
 exports.getArticleById = async(id) => {
    try{
     const article = await Article.findById({_id: id}).where('state').eq('published');
@@ -32,6 +33,8 @@ exports.getArticleById = async(id) => {
    
 }
 
+
+//create a new article
 exports.createArticle = async(data) => {
     try{
        const article = await Article.create(data);
@@ -42,6 +45,7 @@ exports.createArticle = async(data) => {
     }
 }
 
+//update an existing article
 exports.updateAnArticle = async(data) => {
     try{
       
@@ -52,6 +56,7 @@ exports.updateAnArticle = async(data) => {
     }
 }
 
+//delete an article
 exports.deleteAnArticle = async(data) => {
     try{
         await Article.deleteOne(data);
