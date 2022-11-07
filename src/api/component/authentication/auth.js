@@ -3,7 +3,7 @@ const User = require('../../model/User')
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const localStrategy = require('passport-local').Strategy
-require('dotenv').config()
+require('dotenv').config();
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -20,7 +20,7 @@ const strategy = new JwtStrategy(options, async(token, done) => {
         
 })
 
-passport.use(strategy)
+passport.use(strategy);
 
 //implement middleware for 'signup' post request
 passport.use('signup', new localStrategy({
