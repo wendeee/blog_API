@@ -5,12 +5,18 @@ require('dotenv').config()
 
 const userAuthRouter = express.Router()
 
+// ********************SIGN UP USER*********************************//
 userAuthRouter.post('/signup', passport.authenticate('signup', {session:false}), async(req, res, next) => {
     res.status(200).json({
         success: true,
         message: 'Signed up successfully!'
+        
     })
 })
+
+// *******************************************************************//
+
+// ************************LOGIN USER********************************//
 
 userAuthRouter.post('/login', async(req, res,next) => {
     passport.authenticate('login', (err,user) => {
