@@ -5,7 +5,8 @@ const { readingTime } = require('../utils/readingTime.utils')
 const { validationResult } = require('express-validator')
 
 exports.getAllArticles = catchAsyncError(async(req, res, next)=>{
-   //destructure query parameters
+   
+    //destructure query parameters
         const { query } = req;
         const { 
             author, 
@@ -18,7 +19,7 @@ exports.getAllArticles = catchAsyncError(async(req, res, next)=>{
             skip = (page - 1) * limit_per_page
          } = query;
 
-         //count number of published articles and compare with skip value
+//*******Count number of published articles and compare with skip value
          let numOfArticles = await Article.countDocuments()
         if(skip >= numOfArticles){
            res.json('Invalid Page Request')
@@ -53,7 +54,10 @@ exports.getAllArticles = catchAsyncError(async(req, res, next)=>{
         }
 
         const articles = await articleService.getAllArticles(searchQuery, orderQuery, skip, limit_per_page);
-        res.status(200).json(articles);   
+        res.status(200).json({
+            totalBlogs: articles.length,
+            articles
+        });   
 })
 
 exports.getArticleById = catchAsyncError(async(req, res, next) => {
@@ -65,7 +69,7 @@ exports.getArticleById = catchAsyncError(async(req, res, next) => {
                 err.status = 'fail'
                 return next(err)
             }
-       return res.json(article)
+       return res.json(article);
        
 })
 
@@ -93,9 +97,9 @@ exports.createArticles = catchAsyncError(async(req, res, next) => {
             title,description,tags,body,author,author_Id,reading_time
         });
         if(!article){
-            res.status(400).json('Article not created!')
+            res.status(400).json('Article not created!');
         }
-        res.status(201).json(article)
+        res.status(201).json(article);
    
 })
 
@@ -173,5 +177,5 @@ exports.deleteArticle = catchAsyncError(async(req, res, next) => {
         await articleService.deleteAnArticle(articleToDelete);
         res.status(204).json({
             status: 'success',
-        })
+        });
 })
