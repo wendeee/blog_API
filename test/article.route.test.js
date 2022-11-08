@@ -12,7 +12,8 @@ require('dotenv').config()
 describe('Get Blog Post: ', () => {
     let token;
     beforeAll(async() => {
-mongoose.connect('mongodb+srv://wendeee:wendeee12345@cluster0.nskbzpu.mongodb.net/TestBlogAPI?retryWrites=true&w=majority')
+        jest.setTimeout(1000000)
+mongoose.connect(process.env.TEST_BLOG_API)
      })
 
    
@@ -122,7 +123,7 @@ mongoose.connect('mongodb+srv://wendeee:wendeee12345@cluster0.nskbzpu.mongodb.ne
         api.put(`/api/v1/blogs/:${res.body._id}`).type('form').send({
             state: "published"
         }).set('Authorization', `Bearer ${token}`)
-        api.get(`/api/v1/articles/${id}`).expect(200)
+        api.get(`/api/v1/blogs/${id}`).expect(200)
     })
   
       
