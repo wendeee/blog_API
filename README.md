@@ -150,7 +150,7 @@ Success
 
 ### Create Article(Blog)
 
-- Route: /api/v1/articles
+- Route: /api/v1/blogs
 - Method: POST
 - Header
     - Authorization: Bearer {tokenMessageFromLogin}
@@ -192,7 +192,7 @@ Success
 ---
 ### Update State Of Created Article(Blog)
 
-- Route: /api/v1/articles/:id
+- Route: /api/v1/blogs/:id
 - Method: PUT
 - Header
     - Authorization: Bearer <tokenMessageFromLogin>
@@ -229,7 +229,7 @@ Success
 
 ### Get Articles
 
-- Route: /api/v1/articles
+- Route: /api/v1/blogs
 - Method: GET
 
 - Query params:
@@ -263,7 +263,7 @@ Success
 ```
 ---
 ### Get Article By Id
-- Route: /api/v1/articles/:id
+- Route: /api/v1/blogs/:id
 - Method: GET
 
 - Responses
