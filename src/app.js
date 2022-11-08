@@ -10,6 +10,7 @@ require('dotenv').config();
 require('./api/component/authentication/auth')
 
 // ******************MIDDLEWARES*******************//
+app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use('/', userAuthRouter)
 app.use('/api/v1/blogs', articleRouter)     //general endpoint
