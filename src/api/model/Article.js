@@ -1,61 +1,66 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const ArticleSchema = new mongoose.Schema({
-    
+const ArticleSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        required: [true, 'A Blog Post must have a title']
+      type: String,
+      required: [true, "A Blog Post must have a title"],
     },
     description: {
-        type: String,
-        required: [true, 'A Blog Post must have a description']
+      type: String,
+      required: [true, "A Blog Post must have a description"],
     },
     tags: {
-        type: Array
+      type: Array,
     },
     read_Count: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
-    author: { 
-        type:String,
-        required: true
+    author: {
+      type: String,
+      required: true,
     },
     author_Id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     state: {
-        type: String,
-        enum: ['draft', 'published'],
-        default: 'draft'
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
     },
     body: {
-        type: String,
-        required: [true, 'A Blog Post must contain a body']
+      type: String,
+      required: [true, "A Blog Post must contain a body"],
     },
     reading_time: {
-        type: String,
-    }
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-}, {timestamps: true})
-
-ArticleSchema.pre(/^find/, function(next){
-    this.populate({
-        path: 'author',
-        select: 'firstname lastname'
-    }).populate({
-        path: 'body',
-        select: 'articles'
-    }).populate({
-        path: 'title'
-    }).populate({
-        path: 'read_Count'
-    }).populate({
-        path: 'reading_time'
+ArticleSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "author",
+    select: "firstname lastname",
+  })
+    .populate({
+      path: "body",
+      select: "articles",
     })
-    next();
-})
+    .populate({
+      path: "title",
+    })
+    .populate({
+      path: "read_Count",
+    })
+    .populate({
+      path: "reading_time",
+    });
+  next();
+});
 
-const Article = mongoose.model('Article', ArticleSchema);
+const Article = mongoose.model("Article", ArticleSchema);
 module.exports = Article;
