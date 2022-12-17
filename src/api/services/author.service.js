@@ -1,9 +1,12 @@
-const Article = require('../model/Article')
-const Author = require('../model/User')
+const Article = require('../model/Article');
 
-exports.getAllArticles = async(findQuery, skip,limit_per_page) =>{
+exports.getAllArticles = async(findQuery, authorID, page, skip,limit_per_page) =>{
     try{
-        const articles = await Article.find(findQuery).skip(skip).limit(limit_per_page);
+        const articles = await Article.find({
+            state: {$regex:  new RegExp(findQuery, "i")},
+            page,
+            // author_Id: authorID
+        }).skip(skip).limit(limit_per_page);
         return articles;
     }catch(err){
         throw err;
