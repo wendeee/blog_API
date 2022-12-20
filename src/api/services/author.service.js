@@ -1,14 +1,16 @@
-const Article = require('../model/Article');
+const Post = require("../model/Post");
 
-exports.getAllArticles = async(findQuery, authorID, page, skip,limit_per_page) =>{
-    try{
-        const articles = await Article.find({
-            state: {$regex:  new RegExp(findQuery, "i")},
-            page,
-            // author_Id: authorID
-        }).skip(skip).limit(limit_per_page);
-        return articles;
-    }catch(err){
-        throw err;
-    }
-}
+exports.getAllPosts = async (authorID, filterQuery, skip, limit) => {
+  try {
+    const posts = await Post.find({
+      authorId: authorID,
+      ...(filterQuery.state ? { state: filterQuery.state } : {}),
+    })
+      .skip(skip)
+      .limit(limit);
+
+    return posts;
+  } catch (err) {
+    throw err;
+  }
+};
