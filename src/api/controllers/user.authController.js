@@ -62,6 +62,7 @@ passport.use(
       try {
         //find user in the db
         const user = await User.findOne({ email: email });
+
         if (!user) return done(null, false, { message: "User not found!" });
 
         //check if password is correct
@@ -117,7 +118,7 @@ exports.forgotPassword = async (req, res, next) => {
   } catch (err) {
     user.passwordResetToken = undefined;
     user.passwordResetTokenExpire = undefined;
-    console.log(err.message);
+
     await user.save({ validateBeforeSave: false });
     return next(
       new Error("An error occurred while sending email. Please try again")
@@ -144,7 +145,6 @@ exports.resetPassword = async (req, res, next) => {
 
   //reset password and delete passwordResetToken and passwordResetExpire fields
   user.password = req.body.password;
-  // console.log(user.password)
 
   user.passwordResetToken = undefined;
   user.passwordResetTokenExpire = undefined;
@@ -158,21 +158,8 @@ exports.resetPassword = async (req, res, next) => {
   //save new changes to db
   await user.save();
 
-  //login user and assign jwt token
-  const payload = {
-    _id: user._id,
-    email: user.email,
-    firstname: user.firstname,
-    lastname: user.lastname,
-  };
-
-  const token = jwt.sign({ user: payload }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-
   res.status(200).json({
     status: "success",
-    message: "Password changed successfully",
-    token,
+    message: "Password changed successfully Login with your new details.",
   });
 };
