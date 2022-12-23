@@ -258,7 +258,7 @@ method: POST
 ```
 ---
 
-## POST
+## POSTS
 
 #### Create a Post
 - Route: /api/v1/blogs
@@ -547,7 +547,7 @@ method: POST
 
 - Email - chinwe.promise2016@gmail.com
 
-Project Link: [https://github.com/wendeee/socialmediaAPI](https://github.com/wendeee/socialmediaAPI)
+Project Link: [https://github.com/wendeee/blog_API](https://github.com/wendeee/blog_API)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
