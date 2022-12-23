@@ -1,6 +1,6 @@
 //title, description, tags, author, timestamp, state, read_count, reading_time and body
 const Post = require("../model/Post");
-const User = require('../model/User')
+const User = require("../model/User");
 //get all published Posts
 exports.getAllPosts = async (searchQuery, orderQuery, skip, limit) => {
   try {
@@ -26,7 +26,7 @@ exports.getPostById = async (id) => {
     const post = await Post.findById({ _id: id })
       .where("state")
       .eq("published");
-    post.read_Count === 0 ? post.read_Count++ : post.read_Count++;
+    post.readCount === 0 ? post.readCount++ : post.readCount++;
     post.save();
     return post;
   } catch (err) {
