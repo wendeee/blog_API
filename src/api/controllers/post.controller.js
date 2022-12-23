@@ -200,84 +200,63 @@ exports.deletePost = catchAsyncError(async (req, res, next) => {
 
 //like a post
 exports.likeAPost = async (req, res) => {
-  //1. Get user who is liking post
-  const getUser = async () => {
-    const user = await User.findById({ _id: req.user._id });
-    return !user ? 'user not found' : user;
-  };
+  //check if user is authenticated
+  const user = await User.findOne({ _id: req.user._id });
+  if (!user)
+    res.status(404).json({ message: "Login or signup to like a post" });
 
-  const user = await getUser();
+  //check if post is in published state. Only a published post can be liked
+  const post = await Post.findOne({ _id: req.params.id, state: "published" });
 
-  //2.Get post that is to be liked
-  const getPost = async () => {
-    const post = await Post.findById(req.params.id);
-    return !post ? 'post not found' : post;
-  };
+  if (!post) res.status(403).json(null);
 
-  const post = await getPost();
+  //check if that post has been liked  and liked by the user
 
-
-  if (post.state === 'draft') {
-    return res.status(403).json({
-      status: 'Fail',
-      message: 'Not found',
+  if (post.likes > 0) {
+    //it means post has been liked, so we check if this current user has liked this post before
+    const postIsLikedByUser = await LikePost.findOne({
+      _post: req.params.id,
     });
-  }
 
-  //3. check if post has already been liked
-  const postInLikedPost = async () => {
-    const post = await LikePost.find({ _post: req.params.id });
-    return !post ? 'Not found' : post;
-  };
+    if (postIsLikedByUser._user.includes(req.user._id)) {
+      //dislike post
+      postIsLikedByUser._user.pull(user);
+      await postIsLikedByUser.save();
 
-  const isLiked = await postInLikedPost();
+      //update post likes count
+      post.likes = post.likes - 1;
+      await post.save();
+      res.status(200).json("you unliked this post");
+    } else {
+      //add current user to user array
+      postIsLikedByUser._user.push(user);
 
-  //4. function to check for userid in _user array
-  const userInArray = async () => {
-    let isUser = await LikePost.find();
-    isUser = isUser.filter((doc) => {
-      return doc._user.includes(user._id);
-    });
-    return !isUser ? 'Not found' : isUser;
-  };
+      await postIsLikedByUser.save();
 
-  if (isLiked.length < 1) {
-    //5. create new likepost document
+      // update like count on post document
+      post.likes === 0 ? post.likes++ : post.likes++;
+      await post.save();
+      res.status(200).json({
+        status: "success",
+        message: "You liked this post",
+        post,
+      });
+    }
+  } else {
+    //it means post has not been liked and we so create a new like document
+    // create new likepost document
     const newLike = new LikePost({
       _user: user,
       _post: post,
     });
     await newLike.save();
 
-    //6. update like  count on post document
     post.likes === 0 ? post.likes++ : post.likes++;
     await post.save();
     res.status(200).json({
-      status: 'success',
-      message: `${user.firstname} ${user.lastname} liked this post!`,
+      status: "success",
+      message: `You liked this post!`,
       post,
     });
-  } else {
-    //7. check for user in _user Array
-    const isUser = await userInArray();
-    if (isUser.length > 0) {
-      res.status(403).json({
-        status: 'Fail',
-        message: `${user.firstname} ${user.lastname} already liked this post!`,
-      });
-    } else {
-      //8. add userId to the _user array
-      isLiked[0]._user.push(user);
-      await isLiked[0].save();
-
-      //9. update repost count on post document
-      post.likes === 0 ? post.likes++ : post.likes++;
-      await post.save();
-      res.status(200).json({
-        status: 'success',
-        message: 'You liked this post',
-        post,
-      });
-    }
   }
 };
