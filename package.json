@@ -5,8 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "NODE_ENV=production node src/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "test": "cross-env NODE_ENV=test jest"
+    "dev": " NODE_ENV=development nodemon src/server.js",
+    "test": "NODE_ENV=test jest"
   },
   "author": "Chinwendu Enyinna",
   "license": "ISC",
