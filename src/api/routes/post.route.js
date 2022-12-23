@@ -1,5 +1,6 @@
 const express = require("express");
 const postController = require("../controllers/post.controller");
+// const commentController = require("../controllers/comment.controller")
 const passport = require("passport");
 require("../controllers/user.authController.js");
 const router = express.Router();
@@ -29,5 +30,7 @@ router
     postController.likeAPost
   );
 
-  
+//  router.route("/:id/comment")
+//  .patch(passport.authenticate('jwt', {session: false}),
+//  commentController.addComment) 
 module.exports = router;
