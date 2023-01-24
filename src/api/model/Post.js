@@ -12,6 +12,12 @@ const PostSchema = new mongoose.Schema(
     },
     tags: {
       type: Array,
+      validate: {
+        validator: function (val){
+          return val && val.length > 0
+        },
+        message: "A post should have at least one tag"
+      }
     },
     readCount: {
       type: Number,
@@ -30,6 +36,7 @@ const PostSchema = new mongoose.Schema(
       enum: ["draft", "published"],
       default: "draft",
     },
+    //coverPhoto
     body: {
       type: String,
       required: [true, "A Blog Post must contain a body"],
