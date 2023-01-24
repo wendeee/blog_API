@@ -8,6 +8,8 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   authorController.getAllPosts
 );
+
+//
 //GET BLOG BY ID
 //DELETE USER ACCOUNT
 module.exports = router;
