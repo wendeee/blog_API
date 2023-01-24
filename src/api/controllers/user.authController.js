@@ -1,6 +1,7 @@
 const passport = require("passport");
 const User = require("../model/User");
 const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 const sendEmail = require("../utils/email");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
@@ -8,8 +9,17 @@ const localStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
 require("dotenv").config();
 
+var cookieExtractor = function (req) {
+  var token = null;
+  if (req && req.cookies) {
+    token = req.cookies["jwt"];
+  }
+  return token;
+};
+
 const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() ,
+  jwtFromRequest: cookieExtractor,
   secretOrKey: process.env.JWT_SECRET,
 };
 
@@ -79,6 +89,46 @@ passport.use(
     }
   )
 );
+
+//template middleware
+exports.isLoggedIn = async (req, res, next) => {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies["jwt"];
+  }
+
+  if (req.cookies.jwt) {
+    try {
+      //1. verify the token
+      const decodedPayload = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      //2. check if user still exists
+      const currentUser = await User.findById(decodedPayload.user._id);
+      if (!currentUser) {
+        return next();
+      }
+      //Else we still have a logged in user
+      res.locals.user = currentUser;
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+
+  next();
+};
+
+exports.logout = (req, res) => {
+  //set false cookie
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: "success" });
+};
 
 //implement forgotPassword function
 exports.forgotPassword = async (req, res, next) => {
