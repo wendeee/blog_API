@@ -46,9 +46,9 @@ exports.createPost = async (data) => {
 };
 
 //update an existing post
-exports.updatePost = async (data) => {
+exports.updatePost = async (data, state) => {
   try {
-    const post = await Post.findByIdAndUpdate(data);
+    const post = await Post.findByIdAndUpdate(data, state, {new: true});
     return post;
   } catch (err) {
     throw err;
