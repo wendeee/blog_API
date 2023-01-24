@@ -13,18 +13,12 @@ exports.getAllPost = catchAsyncError(async (req, res) => {
     author,
     title,
     tags,
-    order = "asc",
-    orderBy = "readCount",
+    order = "desc",
+    orderBy = "createdAt",
     page = req.query.page * 1 || 1,
     limit = req.query.limit * 1 || 20,
     skip = (page - 1) * limit,
   } = query;
-
-  // //*******Count number of published posts and compare with skip value
-  // let numOfPosts = await Post.countDocuments();
-  // // if (skip >= numOfPosts) {
-  // //   res.json("Invalid Page Request");
-  // // }
 
   //create query object
   const searchQuery = {};
@@ -94,7 +88,7 @@ exports.createPosts = catchAsyncError(async (req, res, next) => {
     });
   }
   //calculate reading time for a created post
-  const readingTime = readTime(body) + "mins";
+  const readingTime = readTime(body) + " min";
 
   const post = await PostService.createPost({
     title,
@@ -114,7 +108,10 @@ exports.createPosts = catchAsyncError(async (req, res, next) => {
   if (!post) {
     res.status(400).json("Post not created!");
   }
-  res.status(201).json(post);
+  res.status(201).json({
+    status: "success",
+    post,
+  });
 });
 
 exports.updatePost = catchAsyncError(async (req, res, next) => {
@@ -128,7 +125,10 @@ exports.updatePost = catchAsyncError(async (req, res, next) => {
     return next(err);
   }
   if (postToUpdate.authorId.toString() !== req.user._id) {
-    res.status(401).json(`You can only update an post you created!`);
+    res.status(401).json({
+      status: "Fail",
+      message: "You can only update an post you created!",
+    });
   }
 
   // Check for validation errors
@@ -138,16 +138,16 @@ exports.updatePost = catchAsyncError(async (req, res, next) => {
       errors: errors.array(),
     });
   }
-
-  const post = await PostService.updatePost(
+  //update state of post
+  const post = await Post.findByIdAndUpdate(
     postToUpdate,
     {
-      $set: req.body,
+      $set: { state: req.body.state },
     },
     { new: true }
   );
 
-  res.status(200).json(post);
+  res.status(200).json({ status: "success", post });
 });
 
 exports.editPost = catchAsyncError(async (req, res, next) => {
@@ -162,18 +162,21 @@ exports.editPost = catchAsyncError(async (req, res, next) => {
     return next(err);
   }
   if (postToEdit.authorId.toString() !== authorId) {
-    return res.status(401).json(`You can only update an post you created!`);
+    return res.status(401).json({
+      status: "Fail",
+      message: "You can only update an post you created!",
+    });
   }
 
   const post = await Post.findByIdAndUpdate(
     postToEdit,
     {
-      $set: req.body,
+      $set: { title: req.body.title, body: req.body.body },
     },
     { new: true }
   );
 
-  res.status(200).json(post);
+  res.status(200).json({ status: "success", post });
 });
 
 exports.deletePost = catchAsyncError(async (req, res, next) => {
@@ -225,6 +228,7 @@ exports.likeAPost = async (req, res) => {
 
       //update post likes count
       post.likes = post.likes - 1;
+      // post.updateOne({_id: req.params.id}, {$inc: {likes: -1}})
       await post.save();
       res.status(200).json("you unliked this post");
     } else {
@@ -234,8 +238,10 @@ exports.likeAPost = async (req, res) => {
       await postIsLikedByUser.save();
 
       // update like count on post document
-      post.likes === 0 ? post.likes++ : post.likes++;
-      await post.save();
+
+      post.updateOne({ _id: req.params.id }, { $inc: { likes: 1 } });
+      // post.likes === 0 ? post.likes++ : post.likes++;
+      // await post.save();
       res.status(200).json({
         status: "success",
         message: "You liked this post",
