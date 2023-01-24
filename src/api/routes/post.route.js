@@ -19,6 +19,10 @@ router
     passport.authenticate("jwt", { session: false }),
     postController.editPost
   )
+  .patch(
+    passport.authenticate("jwt", { session: false }),
+    postController.updatePost
+  ) //update state of post
   .delete(
     passport.authenticate("jwt", { session: false }),
     postController.deletePost
@@ -32,5 +36,5 @@ router
 
 //  router.route("/:id/comment")
 //  .patch(passport.authenticate('jwt', {session: false}),
-//  commentController.addComment) 
+//  commentController.addComment)
 module.exports = router;
