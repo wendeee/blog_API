@@ -1,11 +1,16 @@
 const app = require('./app');
-const DB_CONNECTION = require('./config/database.config')
+
+const CONFIG = require('./config/config')
+const connectToDB = require('./db/mongodb')
 
 require('dotenv').config();
-DB_CONNECTION()
-const port = process.env.PORT || 3000;
+
+//connect to DB
+connectToDB()
+
+const PORT = CONFIG.PORT || 3000;
 
 
-app.listen(port, () => {
-    console.log(`server is running on http://localhost:${port}`)
+app.listen(PORT, () => {
+    console.log(`server is running on http://localhost:${PORT}`)
 })
