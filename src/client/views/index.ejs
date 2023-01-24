@@ -1,0 +1,50 @@
+<%- include('partials/header.ejs'); -%>
+
+<div class="content-section">
+  <main>
+    <div class="div-title">
+      <h3>
+        FEATURED POST
+        <hr class="border-line" />
+      </h3>
+    </div>
+
+    <div class="card-container">
+      <% posts.forEach((post) => { %>
+      <div class="card">
+        <div class="category"><p><%= post.tags[0]%></p></div>
+        <div class="title"><h1><a id="title-href" href="/posts/<%=post.id%>"><%= post.title %></a></h1></div>
+        <div class="content">
+          <p>
+            <a href="/posts/<%=post.id%>"><%= post.body.substring(0, 200) + '...' %></a>
+          </p>
+        </div>
+      
+        <div class="post-info">
+          <div>
+            <p>
+              <span id="author">Published by:</span>
+              <span id="author-name"><%= post.author %></span>
+            </p>
+          </div>
+
+          <div><p class="read-time"><%= post.readingTime %> read</p></div>
+          <div>
+            <p class="published-date">
+              <%= post.createdAt.toLocaleString('en-us', {month: 'long', day:
+              'numeric', year:'numeric'}) %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <% }) %>
+    </div>
+    <!--End of div card container-->
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+<script src="/public/Js/index.js" type="module"></script>
+
+<%- include('partials/footer.ejs'); -%>

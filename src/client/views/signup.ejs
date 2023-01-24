@@ -1,0 +1,51 @@
+<%- include('partials/header.ejs'); -%>
+
+
+<style>
+  .banner-div, .write,.signup{
+    display: none;
+  };
+  
+
+</style>
+  <body>
+    <form class="form-group sign-up" method="POST">
+      <!-- user input-->
+      <label for="firstname"></label>
+      <input type="text" name="firstname" placeholder="Firstname" id="firstname" required />
+      <br /><br />
+      <label for="lastname"></label>
+      <input
+        type="text"
+        name="lastname"
+        placeholder="Lastname"
+        id="lastname"
+        required
+      /><br /><br />
+      <label for="email"></label>
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        id="email"
+        required
+      /><br /><br />
+
+      <label for="password"></label>
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        id="password"
+        required
+      /><br /><br />
+      <!-- submit button -->
+      <button type="submit" class="btn btn-login">Signup</button> 
+    </form>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+  <script src="/public/Js/signup.js" type="module"></script>
+
+  <%- include('partials/footer.ejs'); -%>
+</html>

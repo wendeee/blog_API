@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=EB+Garamond:ital,wght@0,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="/public/css/styles.css" />
+  </head>
+  <body>
+    <div class="container-header">
+      <!--container div-->
+      <div class="nav-div">
+        <nav>
+          <div class="logo">
+            <a href="/">Bloglite<span>.</span></a>
+          </div>
+
+          <div class="nav-menu">
+            <ul>
+              <% if (user){ %>
+              <li><a href="">Log out</a></li>
+              <li><a href="/me"><%= user.firstname %></a></li>
+              <% } else { %>
+              <li><a href="/login">Log in</a></li>
+              <li><a href="/signup">sign up</a></li>
+              <% } %>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <!-- <h1 class="compose">Compose</h1>
+<hr> -->
+
+      <form action="/write" , method="post" class="form">
+        <div class="form-group">
+          <label for="Title"><h2>Title</h2></label>
+          <input class="title" type="text" name="title" />
+          <label for="Description"><h2>Description</h2></label>
+          <input class="description" type="text" name="description" />
+          <label for="Tags"><h2>Tags</h2></label>
+          <input class="tags" type="text" name="tags" />
+          <label for="Post"><h2>Post</h2></label>
+          <textarea
+            class="body"
+            name="body"
+            id="txt-area"
+            cols="30"
+            rows="5"
+          ></textarea>
+        </div>
+        <button class="btn" type="submit" name="write">Save</button>
+      </form>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+      <script src="/public/Js/write.js" type="module"></script>
+
+      <%- include('partials/footer.ejs'); -%>
+    </div>
+  </body>
+</html>

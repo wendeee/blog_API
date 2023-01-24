@@ -1,0 +1,47 @@
+<%- include('partials/header.ejs'); -%>
+
+<style>
+  .banner-div {
+    display: none;
+  }
+  footer {
+    margin-top: 5rem;
+  }
+</style>
+
+<div class="content-section post">
+  <% if(user && user.firstname == post.author.split(' ')[0]){ %>
+  <div class="publish">
+    <p><a href="" class="publish-post btn">Publish</a></p>
+  </div>
+  <% } %>
+
+  <div class="post-header"></div>
+  <hr />
+
+  <div class="post-body post">
+    <p class="post-content"><%= post.body %></p>
+
+    <div class="post-reactions">
+      <form>
+        <div class="like-icon">
+          <a href="/<%=post._id%>/like">
+            <span class="material-symbols-outlined like"> thumb_up </span></a
+          >
+          <p class="like-count"><%= post.likes %></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div>
+  <% if( user && user.firstname == post.author.split(' ')[0]){ %>
+  <button class="edit-post btn btn-post">Edit Post</button>
+  <button class="save-post btn btn-post">Save Changes</button>
+  <button class="delete-post btn btn-post">Delete Post</button>
+  <% } %>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+<script src="/public/Js/post.js" type="module"></script>
+<%- include('partials/footer.ejs'); -%>
