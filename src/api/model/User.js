@@ -27,6 +27,8 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  // bio
+  //profilephoto
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -40,10 +42,9 @@ const UserSchema = new Schema({
 //add a pre-hook function to the UserSchema. This function gets called
 //before the user info is stored in the database
 UserSchema.pre("save", async function (next) {
-
   //only run if password was modified
-  if (!this.isModified('password')) return next();
- 
+  if (!this.isModified("password")) return next();
+
   try {
     if (this.password) {
       const hash = await bcrypt.hash(this.password, 12);
@@ -57,14 +58,14 @@ UserSchema.pre("save", async function (next) {
 
 UserSchema.pre("update", async function (next) {
   const password = this.getUpdate().$set.password;
-  
+
   if (!password) {
     return next();
   }
   try {
     const hash = await bcrypt.hash(this.password, 12);
     this.getUpdate().$set.password = hash;
-    console.log(password + ' HASHED')
+    console.log(password + " HASHED");
     next();
   } catch (error) {
     return next(error);
@@ -82,7 +83,6 @@ UserSchema.methods.isValidPassword = async function (password) {
 
 //Add forgot password
 UserSchema.methods.generatePasswordResetToken = async function () {
-  
   const user = this;
   //1). generate a plain unencrypted token
   const resetToken = crypto.randomBytes(32).toString("hex");
