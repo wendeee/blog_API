@@ -2,7 +2,8 @@ const login = async (email, password) => {
   try {
     const res = await axios({
       method: "POST",
-      url: "http://localhost:8080/api/auth/login",
+      url: 'https://bloglite-oxtq.onrender.com/api/auth/login',
+      // url: "http://localhost:8080/api/auth/login",
       data: {
         email,
         password,
