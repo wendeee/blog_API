@@ -25,7 +25,8 @@ userAuthRouter.post(
 //Add Cookie
     //set Httpcookie
     res.cookie('jwt', token, {
-      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+      maxAge: 2 * 60 * 60 * 1000,
+      // expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
       secure: true,
       httpOnly: true
     })
@@ -71,7 +72,9 @@ userAuthRouter.post("/login", async (req, res, next) => {
        
         //set Httpcookie
         res.cookie('jwt', token, {
-          expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+          maxAge: 2 * 60 * 60 * 1000,
+          // expires: process.env.JWT_COOKIE_EXPIRES_IN,
+          // expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
           secure: true,
           httpOnly: true
         })
