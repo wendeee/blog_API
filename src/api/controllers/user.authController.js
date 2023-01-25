@@ -125,6 +125,7 @@ exports.logout = (req, res) => {
   //set false cookie
   res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 10 * 1000),
+    secure: true,
     httpOnly: true,
   });
   res.status(200).json({ status: "success" });
