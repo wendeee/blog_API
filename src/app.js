@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const helmet = require("helmet");
+const contentSecurityPolicy = require("helmet-csp");
 const cors = require("cors");
 const { rateLimit } = require("express-rate-limit");
 const cookieParser = require("cookie-parser");
@@ -25,17 +26,30 @@ app.use(limiter);
 app.use(cors());
 
 //security middleware - protect express app
-// app.use(helmet());
+app.use(helmet());
 app.use(
-  helmet.contentSecurityPolicy({
+  contentSecurityPolicy({
+    useDefaults: true,
     directives: {
-      defaultSrc: ["'self'", "data:", "blob:"],
-      scriptSrc: ["'self'", "https://*.cloudflare.com"],
-      scriptSrcElem: ["'self'", "https:", "https://*.cloudflare.com"],
-      connectSrc: ["'self'", "data", "https://*.cloudflare.com"],
+      defaultSrc: ["'self'", "default.example"],
+      scriptSrc: ["'self'", "js.example.com", "https://*.cloudflare.com"],
+      objectSrc: ["'none'"],
+      connectSrc: ["'self'", "ws:"],
+      upgradeInsecureRequests: [],
     },
+    reportOnly: false,
   })
 );
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'", "data:", "blob:"],
+//       scriptSrc: ["'self'", "https://*.cloudflare.com"],
+//       scriptSrcElem: ["'self'", "https:", "https://*.cloudflare.com"],
+//       connectSrc: ["'self'", "data", "https://*.cloudflare.com"],
+//     },
+//   })
+// );
 
 //set views and view engine
 app.set("view engine", "ejs");
