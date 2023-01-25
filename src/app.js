@@ -26,20 +26,20 @@ app.use(limiter);
 app.use(cors());
 
 //security middleware - protect express app
-app.use(helmet());
-app.use(
-  contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-      defaultSrc: ["'self'", "default.example"],
-      scriptSrc: ["'self'", "js.example.com", "https://*.cloudflare.com"],
-      objectSrc: ["'none'"],
-      connectSrc: ["'self'", "ws:"],
-      upgradeInsecureRequests: [],
-    },
-    reportOnly: false,
-  })
-);
+// app.use(helmet());
+// app.use(
+//   contentSecurityPolicy({
+//     useDefaults: true,
+//     directives: {
+//       defaultSrc: ["'self'", "default.example", "data:", "blob:"],
+//       scriptSrc: ["'self'", "https://*.cloudflare.com"],
+//       objectSrc: ["'none'"],
+//       connectSrc: ["'self'", "data", "https://*.cloudflare.com"],
+//       upgradeInsecureRequests: [],
+//     },
+//     reportOnly: false,
+//   })
+// );
 // app.use(
 //   helmet.contentSecurityPolicy({
 //     directives: {
