@@ -12,7 +12,7 @@ const signup = async (firstname, lastname, email, password) => {
       },
     });
     if ((res.data.status = "success")) {
-      alert("signed up successfully");
+      // alert("signed up successfully");
       window.setTimeout(() => {
         location.assign("/");
       }, 1500);

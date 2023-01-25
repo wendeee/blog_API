@@ -10,7 +10,7 @@ const login = async (email, password) => {
     });
 
     if ((res.data.status = "success")) {
-      alert("Logged in successfully!");
+      // alert("Logged in successfully!");
       window.setTimeout(() => {
         location.assign("/");
       }, 1500);
