@@ -11,7 +11,7 @@ const wrapper = document.querySelector(".post-header");
 const getAPost = async () => {
   const res = await axios({
     method: "GET",
-    url: `http://localhost:8080/api/v1/blogs/${
+    url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }`,
   });
@@ -56,7 +56,7 @@ const editAndSaveChanges = async (title, description, body) => {
   try {
     await axios({
       method: "PUT",
-      url: `http://localhost:8080/api/v1/blogs/${
+      url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
         window.location.href.split("/")[4]
       }`,
       data: {
@@ -75,7 +75,7 @@ const editAndSaveChanges = async (title, description, body) => {
 const delPost = async () => {
   const res = await axios({
     method: "DELETE",
-    url: `http://localhost:8080/api/v1/blogs/${
+    url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }`,
   });
@@ -90,7 +90,7 @@ const delPost = async () => {
 const likePost = async (likeCount) => {
   const res = await axios({
     method: "PATCH",
-    url: `http://localhost:8080/api/v1/blogs/${
+    url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }/like`,
   });
@@ -100,7 +100,7 @@ const likePost = async (likeCount) => {
 const publish = async () => {
   const res = await axios({
     method: "PATCH",
-    url: `http://localhost:8080/api/v1/blogs/${
+    url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }`,
     data: { state: "published" },

@@ -2,7 +2,7 @@ const logout = async () => {
   try {
     const res = await axios({
       method: "GET",
-      url: "http://localhost:8080/api/auth/logout",
+      url: "https://bloglite-oxtq.onrender.com/api/auth/logout",
     });
     if ((res.data.status = "success")) {
       alert("Logged out successfully");
@@ -24,7 +24,7 @@ if (logoutBtn)
 const getAPost = async () => {
   await axios({
     method: "GET",
-    url: `http://localhost:8080/api/v1/blogs/${URL}`,
+    url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${URL}`,
   });
   location.assign(`/posts/${URL}`);
 };

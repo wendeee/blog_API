@@ -2,7 +2,7 @@ const createPost = async (title, description, tags, body) => {
   try {
     const res = await axios({
       method: "POST",
-      url: "http://localhost:8080/api/v1/blogs",
+      url: "https://bloglite-oxtq.onrender.com/api/v1/blogs",
       data: {
         title,
         description,

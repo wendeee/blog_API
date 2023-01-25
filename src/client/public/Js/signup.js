@@ -3,7 +3,7 @@ const signup = async (firstname, lastname, email, password) => {
   try {
     const res = await axios({
       method: "POST",
-      url: "http://localhost:8080/api/auth/signup",
+      url: "https://bloglite-oxtq.onrender.com/api/auth/signup",
       data: {
         firstname,
         lastname,

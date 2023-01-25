@@ -4,7 +4,7 @@ document.querySelector(".banner-div").style.display = "none";
 const getPosts = async () => {
   const res = await axios({
     method: "GET",
-    url: "http://localhost:8080/api/v1/author/blogs",
+    url: "https://bloglite-oxtq.onrender.com/api/v1/author/blogs",
   });
 
   const allPosts = res.data.posts;
