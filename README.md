@@ -18,10 +18,10 @@ This is a  REST API  for a Blog created using NodeJS, ExpressJS and MongoDB. Aut
 
   <p align="center">
     <br />
-    <a href="https://github.com/wendeee/socialmediaAPI#readme"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/wendeee/blog_API/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://linkup.cyclic.app">View Demo</a>
+    <a href="https://bloglite-oxtq.onrender.com/">View Demo</a>
   </p>
 </div>
 
