@@ -11,5 +11,6 @@ router.get(
 
 //
 //GET BLOG BY ID
+router.get("/:id", passport.authenticate("jwt", {session: false}), authorController.getAPost)
 //DELETE USER ACCOUNT
 module.exports = router;
