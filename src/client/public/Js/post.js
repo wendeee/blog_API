@@ -13,7 +13,7 @@ const getAPost = async () => {
     method: "GET",
     // url: `http://localhost:8080/api/v1/author/blogs/${
     //   window.location.href.split("/")[4]}`,
-    url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
+    url: `https://bloglite-oxtq.onrender.com/api/v1/author/blogs/${
       window.location.href.split("/")[4]
     }`,
   });
