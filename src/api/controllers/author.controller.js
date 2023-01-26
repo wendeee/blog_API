@@ -34,3 +34,12 @@ exports.getAllPosts = catchAsyncError(async (req, res) => {
     posts,
   });
 });
+
+exports.getAPost = async(req, res) => {
+  const post = await authorService.getPostById(req.params.id)
+
+  res.status(200).json({
+    status: 'success',
+    post
+  })
+}
