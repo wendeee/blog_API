@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A blog API",
   "main": "src/server.js",
-  "scripts": {
+   "scripts": {
     "start": "NODE_ENV=production node src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js",
     "test": "NODE_ENV=test jest"
