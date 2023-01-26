@@ -19,7 +19,7 @@ const getAPost = async () => {
   console.log(postData)
   createPostDiv(postData, ".post-header");
 };
-getAPost();
+// getAPost();
 
 function createPostDiv(data, postClass) {
   const container = document.querySelector(postClass);
@@ -51,6 +51,7 @@ function createPostDiv(data, postClass) {
       </div>`;
 
   container.innerHTML += card;
+  getAPost()
 }
 
 const editAndSaveChanges = async (title, description, body) => {
