@@ -16,6 +16,7 @@ const getAPost = async () => {
     }`,
   });
   const postData = res.data;
+  console.log(postData)
   createPostDiv(postData, ".post-header");
 };
 getAPost();
