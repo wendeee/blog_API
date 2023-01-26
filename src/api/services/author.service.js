@@ -14,3 +14,17 @@ exports.getAllPosts = async (authorID, filterQuery, skip, limit) => {
     throw err;
   }
 };
+
+//get a post by id
+exports.getPostById = async (id) => {
+  try {
+    const post = await Post.findById({ _id: id })
+    if(post.state == 'published'){
+      post.readCount === 0 ? post.readCount++ : post.readCount++;
+      post.save();
+    }
+    return post;
+  } catch (err) {
+    throw err;
+  }
+};
