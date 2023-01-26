@@ -2,15 +2,16 @@ const logout = async () => {
   try {
     const res = await axios({
       method: "GET",
+      // url: 'http://localhost:8080/api/auth/logout',
       url: "https://bloglite-oxtq.onrender.com/api/auth/logout",
     });
     if ((res.data.status = "success")) {
-      alert("Logged out successfully");
+      displayAlert("success", "Logged out successfully");
       location.reload(true);
     }
   } catch (err) {
     console.log(err);
-    alert(err.response.data.message);
+    displayAlert("error", err.response.data.message);
   }
 };
 
@@ -39,3 +40,15 @@ document.querySelector(".title").addEventListener("click", (e) => {
   getUrl();
   getAPost();
 });
+
+//alert
+const hideAlert = async () => {
+  const div = document.querySelector(".alert");
+  if (div) div.parentElement.removeChild(div);
+};
+const displayAlert = async (type, message) => {
+  hideAlert();
+  const alertDiv = `<div class="alert alert--${type}">${message}</div>`;
+  document.querySelector("body").insertAdjacentHTML("afterbegin", alertDiv);
+  window.setTimeout(hideAlert, 5000);
+};

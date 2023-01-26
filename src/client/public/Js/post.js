@@ -11,18 +11,21 @@ const wrapper = document.querySelector(".post-header");
 const getAPost = async () => {
   const res = await axios({
     method: "GET",
+    // url: `http://localhost:8080/api/v1/author/blogs/${
+    //   window.location.href.split("/")[4]}`,
     url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }`,
   });
-  const postData = res.data;
-  console.log(postData);
+  const postData = res.data.post;
+
   createPostDiv(postData, ".post-header");
 };
-// getAPost();
+getAPost();
 
 function createPostDiv(data, postClass) {
   const container = document.querySelector(postClass);
+
   let createdAt = new Date(data.createdAt).toLocaleString("en-us", {
     month: "long",
     day: "numeric",
@@ -45,19 +48,21 @@ function createPostDiv(data, postClass) {
         </div>
         <div><p>${data.readingTime} read</p></div>
         <div>
-          <p>category: <span class="post-tag"> ${data.tags[0]} </span></p>
+          <p>category: <span class="post-tag"> ${data.tags} </span></p>
         </div>
         <div><p>views: ${data.readCount}</p></div>
       </div>`;
 
   container.innerHTML += card;
-  getAPost();
 }
 
 const editAndSaveChanges = async (title, description, body) => {
   try {
     await axios({
       method: "PUT",
+      // url: `http://localhost:8080/api/v1/blogs/${
+      //   window.location.href.split("/")[4]
+      // }`,
       url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
         window.location.href.split("/")[4]
       }`,
@@ -67,9 +72,11 @@ const editAndSaveChanges = async (title, description, body) => {
         body,
       },
     });
+    if ((res.data.status = "success"))
+      displayAlert("success", "Changes saved!");
   } catch (err) {
     if ((err.response.data.status = "Fail")) {
-      alert("Unauthorized!");
+      displayAlert("error", "Unauthorized!");
     }
   }
 };
@@ -77,12 +84,15 @@ const editAndSaveChanges = async (title, description, body) => {
 const delPost = async () => {
   const res = await axios({
     method: "DELETE",
+    // url: `http://localhost:8080/api/v1/blogs/${
+    //   window.location.href.split("/")[4]
+    // }`,
     url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }`,
   });
   if ((res.data.status = "success")) {
-    alert("Post deleted!");
+    displayAlert("success", "Post deleted!🎃");
     window.setTimeout(() => {
       location.assign("/me");
     }, 1000);
@@ -92,6 +102,9 @@ const delPost = async () => {
 const likePost = async (likeCount) => {
   const res = await axios({
     method: "PATCH",
+    // url: `http://localhost:8080/api/v1/blogs/${
+    //   window.location.href.split("/")[4]
+    // }/like`,
     url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }/like`,
@@ -102,6 +115,9 @@ const likePost = async (likeCount) => {
 const publish = async () => {
   const res = await axios({
     method: "PATCH",
+    // url: `http://localhost:8080/api/v1/blogs/${
+    //   window.location.href.split("/")[4]
+    // }`,
     url: `https://bloglite-oxtq.onrender.com/api/v1/blogs/${
       window.location.href.split("/")[4]
     }`,
@@ -109,7 +125,7 @@ const publish = async () => {
   });
 
   if ((res.data.status = "success")) {
-    alert("Published");
+    displayAlert("success", "Published🎉");
     window.setTimeout(() => {
       location.assign("/");
     }, 1500);
@@ -153,3 +169,15 @@ document.querySelector(".like").addEventListener("click", (e) => {
   e.preventDefault();
   likePost(likeCount);
 });
+
+//alert prompt
+const hideAlert = async () => {
+  const div = document.querySelector(".alert");
+  if (div) div.parentElement.removeChild(div);
+};
+const displayAlert = async (type, message) => {
+  hideAlert();
+  const alertDiv = `<div class="alert alert--${type}">${message}</div>`;
+  document.querySelector("body").insertAdjacentHTML("afterbegin", alertDiv);
+  window.setTimeout(hideAlert, 5000);
+};
