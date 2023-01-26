@@ -16,10 +16,11 @@ const getPosts = async () => {
 };
 //create div template
 function createDivForPost(data, id) {
+  console.log(data.id)
   const container = document.querySelector(id);
   let card = `<div class='post-card'>
             <div class="post-title post-title-author"><a href="/posts/${
-              data._id
+              data.id
             }">${data.title}</a></div>
             <div class="post-body">${data.body.substring(0, 200)}....</div>
             <div class="post-state">${data.state}</div>
