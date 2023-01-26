@@ -8,6 +8,7 @@ const getPosts = async () => {
   });
 
   const allPosts = res.data.posts;
+  console.log(allPosts)
 
   //loop through posts and populate 'card-div' with post data
   allPosts.forEach((post) => {
@@ -16,11 +17,11 @@ const getPosts = async () => {
 };
 //create div template
 function createDivForPost(data, id) {
-  console.log(data.id)
+  console.log(data._id)
   const container = document.querySelector(id);
   let card = `<div class='post-card'>
             <div class="post-title post-title-author"><a href="/posts/${
-              data.id
+              data._id
             }">${data.title}</a></div>
             <div class="post-body">${data.body.substring(0, 200)}....</div>
             <div class="post-state">${data.state}</div>
