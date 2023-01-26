@@ -4,11 +4,11 @@ document.querySelector(".banner-div").style.display = "none";
 const getPosts = async () => {
   const res = await axios({
     method: "GET",
+    // url: 'http://localhost:8080/api/v1/author/blogs',
     url: "https://bloglite-oxtq.onrender.com/api/v1/author/blogs",
   });
 
   const allPosts = res.data.posts;
-  console.log(allPosts)
 
   //loop through posts and populate 'card-div' with post data
   allPosts.forEach((post) => {
@@ -17,7 +17,6 @@ const getPosts = async () => {
 };
 //create div template
 function createDivForPost(data, id) {
-  console.log(data._id)
   const container = document.querySelector(id);
   let card = `<div class='post-card'>
             <div class="post-title post-title-author"><a href="/posts/${
